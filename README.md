@@ -11,8 +11,7 @@ This repository contains a notebook to help anyone try an introductory analysis 
 
 Below is a diagram of this Short-Read Analysis Workflow - fq2bam includes both alignment, processing and quality control.
 
-![layout architecture](https://github.com/clara-parabricks-workflows/genomics-analysis-blueprint/blob/main/images/pbworkflow.png?raw=true)
-
+![layout architecture](images/pbworkflow.png?raw=true)
 
 # System Requirements
 
@@ -53,10 +52,10 @@ To launch an instance with our recommended configuration, click here: [![ Click 
 2. Open the **Launchables** tab at the top and click **Create Launchable**. 
 3. Under **Compute** select any GPU instance that meets the requirements outlined above. During testing, we used 1 L40S GPU with 256GB System RAM and 32 CPUs.
 4. Under **Container** we select **Container Mode** > **Custom Container** and enter `nvcr.io/nvidia/clara/clara-parabricks:4.4.0-1`. 
-5. For **Files** we use the path to this repository `https://github.com/clara-parabricks-workflows/genomics-analysis-blueprint.git`
+5. For **Files** we use the path to this repository `https://github.com/NVIDIA-AI-Blueprints/genomics-analysis.git`
 6. For **Export Ports** we name the tunnel "Jupyter" and use port 8888. 
 7. Create a descriptive name for the launchable. The instance will take a few minutes to spin up. 
-8. Navigate to the notebook at `genomics-analysis-blueprint/germline_wes.ipynb`. 
+8. Navigate to the notebook at `genomics-analysis/germline_wes.ipynb`. 
 
 # Terms of use
-**Governing Terms**: The Parabricks container is governed by the [NVIDIA Software License Agreement](https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-software-license-agreement/) and the [Product-Specific Terms for NVIDIA AI Products](https://www.nvidia.com/en-us/agreements/enterprise-software/product-specific-terms-for-ai-products/). This Genomics Analysis Blueprint github repository is provided under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+**Governing Terms**: The Parabricks container is governed by the [NVIDIA Software License Agreement](https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-software-license-agreement/) and the [Product-Specific Terms for NVIDIA AI Products](https://www.nvidia.com/en-us/agreements/enterprise-software/product-specific-terms-for-ai-products/). This Genomics Analysis github repository is provided under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
