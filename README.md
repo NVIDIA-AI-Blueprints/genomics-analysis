@@ -29,14 +29,19 @@ Users may have to wait 5-10 minutes for the instance to start depending on cloud
 
 # Notebooks
 
-### **germline_wes**
+### **germline_wes.ipynb**
 
 - This example uses the Parabricks 4.4.0 release.
 - This example uses whole exome (WES) data from sample NA12878. 
 - In the first step, we will map the sequence reads to the reference genome. The input FASTQ files are aligned using the Burrows-Wheeler Aligner (BWA) through the Parabricks fq2bam tool. 
 - Lastly, we will run DeepVariant, a deep learning based variant caller on the aligned reads. - It uses a convolutional neural network to find single nucleotide variants (SNVs) and insertions/deletions (InDels).
 
+### **pangenome.ipynb**
+
 After a user is able to run this flow, they can try running this on their own data as well as explore cloud examples available at the end of the notebook.
+
+- This example uses the Parabricks 4.6.0 release 
+- It runs through 
 
 # Deployment 
 
