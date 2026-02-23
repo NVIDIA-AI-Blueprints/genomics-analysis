@@ -1,0 +1,3 @@
+[submodule "CodonFM"]
+	path = CodonFM
+	url = git@github.com:NVIDIA-Digital-Bio/CodonFM.git
