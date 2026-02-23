@@ -1,0 +1,3 @@
+[submodule "CodonFM"]
+	path = CodonFM
+	url = git@github.com:gburnett-nvidia/CodonFM.git
