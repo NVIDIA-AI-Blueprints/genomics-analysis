@@ -1,7 +1,7 @@
 #!/bin/bash 
 
 # Install dependencies 
-sudo apt install -y bcftools tree pigz
+sudo apt install -y bcftools tree pigz tabix
 
 # Import submodules (not properly imported by brev)
 git submodule init
