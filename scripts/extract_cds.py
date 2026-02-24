@@ -3,7 +3,7 @@ import numpy as np
 import polars as pl
 import pandas as pd
 from Bio.Data import CodonTable
-from utils.gtf_processing import extract_cds_sequence, check_cds_quality
+from scripts.gtf_processing import extract_cds_sequence, check_cds_quality
 
 def extract_cds(REFERENCE_GENOME,
                 ANNOTATION_FILE,
