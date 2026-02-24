@@ -1,9 +1,11 @@
 #!/bin/bash 
 
-apt install y bcftools
+# Install additional dependencies 
+sudo apt install -y bcftools tree 
 
-# Install CodonFM Python requirements
-pip install -r CodonFM/requirements.txt
+# For the CodonFM Submodule (not properly loaded into brev)
+# 3. Switch to the main branch 
+cd CodonFM && git switch main 
 
-# Pull Docker containers
+# Pull Docker containers to avoid cluttering the notebook output 
 docker pull nvcr.io/nvidia/clara/clara-parabricks:4.6.0-1
