@@ -6,6 +6,7 @@
   - [Pangenome](pangenome.ipynb)
   - [Variant Effect Prediction](variant_effect_prediction.ipynb)
 - [System Requirements](#system-requirements)
+- [How to run](#How-to-run)
 - [Terms of Use](#terms-of-use)
 
 ## Overview
@@ -25,6 +26,20 @@ This repository contains three end-to-end notebooks that demonstrate GPU-acceler
 - **[pangenome.ipynb](pangenome.ipynb)** — Demonstrates a pangenome analysis workflow as an alternative to single-reference alignment. Downloads the HPRC v1.1 pangenome graph, aligns short-read FASTQ samples using GPU-accelerated Giraffe, and calls variants with Pangenome-Aware DeepVariant — a variant of DeepVariant that uses the pangenome graph to improve alignment accuracy and variant detection across diverse populations.
 
 - **[variant_effect_prediction.ipynb](variant_effect_prediction.ipynb)** — Runs a full variant effect prediction pipeline starting from raw FASTQ files. Uses Parabricks to align reads and call variants, processes GENCODE gene annotations to extract protein-coding sequences, maps detected variants onto transcripts, and uses CodonFM (NVIDIA's RNA foundation model) to predict the functional impact of each variant via log likelihood ratios.
+
+## How to Run 
+
+### Pre-configured instances 
+
+These notebooks are available as a launchable on [Brev](https://login.brev.nvidia.com/signin). This is a one-click method, that automatically installs dependencies, provisions hardware, and loads this repository. 
+
+ [![ Click here to deploy.](https://brev-assets.s3.us-west-1.amazonaws.com/nv-lb-dark.svg)]()
+
+### Manual installation 
+
+For users who prefer to run on their own hardware, installation instructions are below: 
+
+TODO 
 
 ## System Requirements
 
