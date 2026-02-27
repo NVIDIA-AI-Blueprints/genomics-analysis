@@ -5,8 +5,10 @@
   - [Germline WES](germline_wes.ipynb)
   - [Pangenome](pangenome.ipynb)
   - [Variant Effect Prediction](variant_effect_prediction.ipynb)
-- [System Requirements](#system-requirements)
 - [How to run](#How-to-run)
+  - [Pre-configured instances](#pre-configured-instances)
+  - [Manual Installation](#manual-installation)
+- [System Requirements](#system-requirements)
 - [Terms of Use](#terms-of-use)
 
 ## Overview
