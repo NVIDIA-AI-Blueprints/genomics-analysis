@@ -1,7 +1,7 @@
 #!/bin/bash 
 
 # Install apt dependencies 
-sudo apt install -y bcftools pigz tabix
+sudo apt install -y bcftools pigz tabix samtools
 
 # Each cloud provider uses a different home dir 
 REPO_PATH=/home/$(whoami)/genomics-analysis
