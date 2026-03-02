@@ -6,7 +6,7 @@ import torch
 from tqdm import tqdm
 
 # Add project paths
-sys.path.append(os.path.abspath('CodonFM'))
+sys.path.append(os.path.abspath('../CodonFM'))
 
 from src.inference.encodon import EncodonInference
 from src.inference.task_types import TaskTypes
