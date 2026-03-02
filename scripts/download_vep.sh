@@ -14,6 +14,7 @@ cd $DATA_DIR && \
     wget -nc --progress=bar:force 2>&1 https://s3.amazonaws.com/parabricks.sample/parabricks_sample.tar.gz 
 
 # Pre-process the data 
+mkdir -p $DATA_DIR/ref
 cd $DATA_DIR && \
     pigz -dc parabricks_sample.tar.gz | tar xvf - && \
     mv parabricks_sample/Data/sample_* . && \

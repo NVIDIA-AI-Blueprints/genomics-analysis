@@ -20,4 +20,4 @@ cd $DATA_DIR/ref && \
 # Pre-process the data 
 cd $DATA_DIR && \
     pigz -dc parabricks_sample.tar.gz | tar xvf - && \
-    mv parabricks_sample/Ref/* ref
+    mv parabricks_sample/Data/sample_* . 
