@@ -1,4 +1,4 @@
 data
-myenv
+.venv
 parabricks_sample*
 */__pycache__

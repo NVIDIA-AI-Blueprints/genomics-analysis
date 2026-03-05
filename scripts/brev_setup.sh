@@ -1,5 +1,7 @@
 #!/bin/bash 
 
+# This setup script should be used on Brev 
+
 # Install apt dependencies 
 sudo apt install -y bcftools pigz tabix samtools
 

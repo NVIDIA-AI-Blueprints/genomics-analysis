@@ -39,9 +39,23 @@ These notebooks are available as a launchable on [Brev](https://login.brev.nvidi
 
 ### Manual installation 
 
-For users who prefer to run on their own hardware, installation instructions are below: 
+For users who prefer to run on their own hardware, installation instructions are provided below: 
 
-TODO 
+Prerequisites: `Python3`
+
+```
+# Create Python virtual environment and activate it
+python3 -m venv .venv 
+source .venv/bin/activate
+
+# Run the setup script 
+./scripts/local_setup.sh
+
+# Start Jupyter lab 
+jupyter lab
+```
+
+Then open the Jupyter notebook
 
 ## System Requirements
 
