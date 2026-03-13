@@ -1,61 +1,116 @@
-# Genomics Analysis Blueprint
+# Genomics Analysis Developer Example
 
-This repository houses the notebook made to try [Parabricks](https://docs.nvidia.com/clara/parabricks/latest/index.html), a GPU-accelerated software suite for secondary genomic analysis.
+Easily run essential genomics workflows to save time leveraging Parabricks and CodonFM. 
 
-The goal of this repository is to help users quickly try the fundamental capabilities of Parabricks on a whole exome data set on their own CUDA capable GPU system, or through the quick deploy capability of [Brev.dev](https://developer.nvidia.com/brev) Launchables. The data set is publicly available from the [Genome in a Bottle](https://www.nist.gov/programs-projects/genome-bottle) Consortium.
+- [Overview](#overview)
+- [Experience Workflow](#experience-workflow)
+  - [Architecture Diagram](#architecture-diagram)
+  - [Notebook Outline](#notebook-outline)
+- [How to Run](#how-to-run)
+  - [Hardware Requirements](#hardware-requirements)
+  - [Software Requirements](#software-requirements)
+  - [Pre-configured Instances](#pre-configured-instances)
+  - [Manual Installation](#manual-installation)
+- [References](#references)
+- [Terms of Use](#terms-of-use)
+- [Ethical Considerations](#ethical-considerations)
 
-This workflow is useful for any bioinformatics scientist or developer who wants to try running Parabricks easily and quickly. If you like the speed and ease of use of Parabricks, you can check out the [latest Parabricks documentation and release information](https://docs.nvidia.com/clara/parabricks/latest/index.html).
+## Overview
 
-# Overview
-This repository contains a notebook to help anyone try an introductory analysis workflow leveraging Parabricks. We will focus on the accelerated germline workflow of fq2bam (Containing BWA-MEM, as well as [GATK](https://gatk.broadinstitute.org/) best practices for data processing and quality control) and [DeepVariant](https://github.com/google/deepvariant). A 30x whole genome can be run through fq2bam in as little as 6 minutes on an NVIDIA DGX system, compared to 4-9 hours on a CPU instance (m5.24xlarge, 96 x vCPU). In this example, users will run a whole exome in a matter of minutes.
+This developer example enables bioinformaticians to run GPU-accelerated genomics workflows in minutes on any cloud through Brev.dev. [NVIDIA® Parabricks®](https://docs.nvidia.com/clara/parabricks/latest/index.html) powers both linear and graph-based read alignment along with variant calling via DeepVariant. [CodonFM](https://github.com/NVIDIA-Digital-Bio/CodonFM), NVIDIA's RNA foundation model, can then be used to predict the functional impact of each detected variant on specific genes.
 
-Below is a diagram of this Short-Read Analysis Workflow - fq2bam includes both alignment, processing and quality control.
+## Experience Workflow
 
-![layout architecture](images/pbworkflow.png?raw=true)
+This developer example shows how to use GPU accelerated tools for alignment (linear and graph), variant calling, and variant effect prediction. 
 
-# System Requirements
+### Architecture Diagram
 
+The exact steps to run this workflow are outlined below: 
 
-| Requirement | Notes |
-| -------- | ------- |
-| GPU  | We recommend L40S to balance cost and performance.  <br> - Higher performance: A100 <br> - Better cost: L4 and T4 <br>|
-| GPU Memory | 48 GB is recommended. <br> - All tools require at least 16 GB of available GPU memory. <br> - For GPUs with 16-48 GB memory, the --low-memory flag is required. |
-| System RAM | At least 100 GB. |
-| CPU | At least 24 CPU threads. |
-| Driver | NVIDIA Driver version 525.60.13 or greater. See documentation about [forward compatibility](https://docs.nvidia.com/deploy/cuda-compatibility/#forward-compatibility). |
-| OS | Any Linux OS that supports nvidia-docker2 and Docker version 20.10 or higher. |
+![](images/genomics-analysis-arch-diagram.svg)
 
-Users may have to wait 5-10 minutes for the instance to start depending on cloud availability. 
+### Notebook Outline 
 
-# Notebooks
+All the code can be found in Jupyter notebooks in the [`notebooks`](notebooks) directory of the Github repo. 
 
-### **germline_wes**
+#### `germline_wes.ipynb`
+Runs a standard germline variant calling workflow on whole exome sequencing (WES) data. Downloads the NA12878 sample from the Genome in a Bottle consortium, aligns reads to the GRCh38 reference using GPU-accelerated BWA-MEM via Parabricks fq2bam, and calls variants with GPU-accelerated DeepVariant, producing a final .vcf file.
 
-- This example uses the Parabricks 4.4.0 release.
-- This example uses whole exome (WES) data from sample NA12878. 
-- In the first step, we will map the sequence reads to the reference genome. The input FASTQ files are aligned using the Burrows-Wheeler Aligner (BWA) through the Parabricks fq2bam tool. 
-- Lastly, we will run DeepVariant, a deep learning based variant caller on the aligned reads. - It uses a convolutional neural network to find single nucleotide variants (SNVs) and insertions/deletions (InDels).
+#### `pangenome.ipynb`
+Demonstrates a pangenome analysis workflow as an alternative to single-reference alignment. Downloads the HPRC v1.1 pangenome graph, aligns short-read FASTQ samples using GPU-accelerated Giraffe, and calls variants with Pangenome-Aware DeepVariant — a variant of DeepVariant that uses the pangenome graph to improve alignment accuracy and variant detection across diverse populations.
 
-After a user is able to run this flow, they can try running this on their own data as well as explore cloud examples available at the end of the notebook.
+#### `variant_effect_prediction.ipynb`
+Runs a full variant effect prediction pipeline starting from raw FASTQ files. Uses Parabricks to align reads and call variants, processes GENCODE gene annotations to extract protein-coding sequences, maps detected variants onto transcripts, and uses CodonFM (NVIDIA's RNA foundation model) to predict the functional impact of each variant via log likelihood ratios.
 
-# Deployment 
+## How to Run 
 
-There are two ways to deploy this launchable depending on what level of customization is desired. 
+### Hardware Requirements 
 
-### 1. Using the Brev Launchable (Quick Start)
+The L40s with at least 48GB of GPU memory is recommended for the best combination of cost and performance. Users can also try L4 or T4 (better cost) or RTX Pro 6000 (better performance). 
 
-To launch an instance with our recommended configuration, click here: [![ Click here to deploy the RAPIDS Singlecell Launchable.](https://brev-assets.s3.us-west-1.amazonaws.com/nv-lb-dark.svg)](https://nvda.ws/41BxA49)  
+NVIDIA Parabricks can be run on any NVIDIA GPU that supports CUDA® architecture 75, 80, 86, 89, 90, 100, or 120 and has at least 16GB of GPU RAM. 
 
-### 2. Manual configuration on Brev 
+Parabricks has been tested specifically on the following NVIDIA GPUs:  
 
-1. Navigate to the [Brev homepage](https://developer.nvidia.com/brev) and select **Get Started**. 
-2. Open the **Launchables** tab at the top and click **Create Launchable**. 
-3. Under **Compute** select any GPU instance that meets the requirements outlined above. During testing, we used 1 L40S GPU with 256GB System RAM and 32 CPUs.
-4. Under **Container** we select **Container Mode** > **Custom Container** and enter `nvcr.io/nvidia/clara/clara-parabricks:4.4.0-1`. 
-5. For **Files** we use the path to this repository `https://github.com/NVIDIA-AI-Blueprints/genomics-analysis.git`
-6. For **Export Ports** we name the tunnel "Jupyter" and use port 8888. 
-7. Create a descriptive name for the launchable. The instance will take a few minutes to spin up. 
-8. Navigate to the notebook at `genomics-analysis/germline_wes.ipynb`. 
+* T4  
+* A10, A30, A40, A100, A6000  
+* L4, L40  
+* H100, H200  
+* GH200
+* B200, B300
+* GB200, GB300
+* RTX PRO 6000 Blackwell Server Edition
+* RTX PRO 4500
+* DGX Spark
+* DGX Station
 
-# Terms of use
-**Governing Terms**: The Parabricks container is governed by the [NVIDIA Software License Agreement](https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-software-license-agreement/) and the [Product-Specific Terms for NVIDIA AI Products](https://www.nvidia.com/en-us/agreements/enterprise-software/product-specific-terms-for-ai-products/). This Genomics Analysis github repository is provided under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+The minimum amount of CPU RAM and CPU threads depends on the number of GPUs. Please refer to the table below: 
+
+| GPUs | Minimum CPU RAM (GB) | Minimum CPU Threads |
+|------|----------------|---------------------|
+| 2 | 100 | 24 |
+| 4 | 196 | 32 |
+| 8 | 392 | 48 |
+
+### Software Requirements 
+
+* Any NVIDIA driver that is compatible with CUDA 12.9 (535, 550, 570, 575, or similar). Please check [here](https://docs.nvidia.com/deploy/cuda-compatibility/#forward-compatibility) for more details on forward compatibility.  
+* Any Linux operating system that supports Docker version 20.10 (or higher) with the NVIDIA GPU runtime.
+
+### Pre-configured Instances 
+
+These notebooks are available as a launchable on [Brev](https://login.brev.nvidia.com/signin). This is a one-click method, that automatically installs dependencies, provisions hardware, and loads this repository. 
+
+ [![ Click here to deploy.](https://brev-assets.s3.us-west-1.amazonaws.com/nv-lb-dark.svg)](https://brev.nvidia.com/launchable/deploy?launchableID=env-3AjR5pVHTtMm2ToM3KTy6wtQWzE)
+
+### Manual installation 
+
+For users who prefer to run on their own hardware, installation instructions are provided below: 
+
+Prerequisites: `Python3`
+
+```
+# Create Python virtual environment and activate it
+python3 -m venv .venv 
+source .venv/bin/activate
+
+# Run the setup script 
+./scripts/local_setup.sh
+
+# Start Jupyter lab 
+jupyter lab
+```
+
+## References
+
+* [Parabricks Documentation](https://docs.nvidia.com/clara/parabricks/latest/index.html) 
+* [CodonFM Blog](https://developer.nvidia.com/blog/introducing-the-codonfm-open-model-for-rna-design-and-analysis/)
+* [Parabricks Pangenome Alignemnt Blog](https://developer.nvidia.com/blog/discover-new-biological-insights-with-accelerated-pangenome-alignment-in-nvidia-parabricks/)
+
+## Terms of Use
+
+**Governing Terms**: The Parabricks container is governed by the [NVIDIA Software License Agreement](https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-software-license-agreement/) and the [Product-Specific Terms for NVIDIA AI Products](https://www.nvidia.com/en-us/agreements/enterprise-software/product-specific-terms-for-ai-products/). This Genomics Analysis Blueprint github repository is provided under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+
+## Ethical Considerations
+
+NVIDIA believes Trustworthy AI is a shared responsibility, and we have established policies and practices to enable development for a wide array of AI applications. When downloaded or used in accordance with our terms of service, developers should work with their supporting model team to ensure the models meet requirements for the relevant industry and use case and addresses unforeseen product misuse. For more detailed information on ethical considerations for the models, please see the Model Card++ Explainability, Bias, Safety & Security, and Privacy Subcards. Please report security vulnerabilities or NVIDIA AI Concerns [here](https://www.nvidia.com/en-us/support/submit-security-vulnerability/). 
