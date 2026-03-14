@@ -5,8 +5,8 @@ set -euo pipefail
 # SPDX-License-Identifier: Apache-2.0
 
 # Make directories for data and references files
-DATA_DIR=$(pwd)/../data
-mkdir -p $DATA_DIR 
+DATA_DIR=$1
+mkdir -p $DATA_DIR/ref
 
 # Download the data 
 # Note: The tarball downloads unnecessary files and can be streamlined in the future 
