@@ -49,8 +49,9 @@ jobs:
         env:
           NGC_API_KEY: ${{ secrets.NGC_API_KEY }}
         run: |
-          NOTEBOOK_PATH="notebooks/germline_wes.ipynb"
-          OUTPUT_NOTEBOOK="germline_wes_result.ipynb"
+          NOTEBOOK_DIR="/workspace/notebooks"
+          NOTEBOOK_PATH="germline_wes.ipynb"
+          OUTPUT_NOTEBOOK="/workspace/germline_wes_result.ipynb"
           
           # Login to NGC
           echo "${NGC_API_KEY}" | docker login nvcr.io -u '$oauthtoken' --password-stdin
@@ -62,13 +63,17 @@ jobs:
             nvcr.io/nvidia/clara/clara-parabricks:${{ env.PARABRICKS_VERSION }} \
             bash -c "
               # Install system dependencies
-              apt-get update && apt-get install -y wget
+              apt-get update && apt-get install -y wget pigz
               
               # Install papermill and jupyter kernel dependencies
               pip install papermill jupyter ipykernel
               
               # Install python3 kernel
               ipython kernel install --name 'python3' --user
+
+              # Run notebook from the notebooks directory so relative paths inside the
+              # notebook (for example ../scripts/download_germline.sh) resolve correctly.
+              cd '$NOTEBOOK_DIR'
               
               # Run the notebook
               papermill '$NOTEBOOK_PATH' '$OUTPUT_NOTEBOOK' --log-output --log-level DEBUG
