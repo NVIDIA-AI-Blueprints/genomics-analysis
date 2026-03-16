@@ -12,10 +12,10 @@ concurrency:
 
 jobs:
   run-genomics-analysis:
-    runs-on: arc-runners-org-nvidia-ai-bp-2-gpu
+    runs-on: arc-runner-set-oke-org-poc-2-gpu
     env:
       PYTHON_VERSION: 3.12
-      PARABRICKS_VERSION: 4.4.0-1
+      PARABRICKS_VERSION: 4.6.0-1
     steps:  
       - name: Checkout BP repository
         uses: actions/checkout@v3
@@ -49,7 +49,7 @@ jobs:
         env:
           NGC_API_KEY: ${{ secrets.NGC_API_KEY }}
         run: |
-          NOTEBOOK_PATH="germline_wes.ipynb"
+          NOTEBOOK_PATH="notebooks/germline_wes.ipynb"
           OUTPUT_NOTEBOOK="germline_wes_result.ipynb"
           
           # Login to NGC
