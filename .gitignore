@@ -1,4 +1,5 @@
 data
+notebook_data
 .venv
 parabricks_sample*
 */__pycache__
