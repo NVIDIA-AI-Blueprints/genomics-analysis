@@ -57,12 +57,17 @@ jobs:
           
           # Login to NGC (host + nested docker pulls from notebooks use host daemon via socket)
           echo "${NGC_API_KEY}" | docker login nvcr.io -u '$oauthtoken' --password-stdin
+
+          # Nested docker bind-mounts are resolved on the host; /ephemeral inside the papermill
+          # container is not the host path. Use a repo-local dir on the host + /workspace/... in-container.
+          mkdir -p "$(pwd)/notebook_data/germline"
           
           # Run papermill inside the Parabricks container.
           # Notebooks call "docker run ... pbrun"; the Parabricks image has no docker CLI unless
           # we install it and mount the host socket (Docker-outside-of-Docker).
           docker run --rm --gpus all \
             -e NGC_API_KEY \
+            -e HOST_DATA_DIR="$(pwd)/notebook_data/germline" \
             -v $(pwd):/workspace \
             -v /var/run/docker.sock:/var/run/docker.sock \
             -w /workspace \

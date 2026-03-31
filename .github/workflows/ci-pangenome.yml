@@ -42,8 +42,11 @@ jobs:
 
           echo "${NGC_API_KEY}" | docker login nvcr.io -u '$oauthtoken' --password-stdin
 
+          mkdir -p "$(pwd)/notebook_data/pangenome"
+
           docker run --rm --gpus all \
             -e NGC_API_KEY \
+            -e HOST_DATA_DIR="$(pwd)/notebook_data/pangenome" \
             -v $(pwd):/workspace \
             -v /var/run/docker.sock:/var/run/docker.sock \
             -w /workspace \
