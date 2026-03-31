@@ -68,6 +68,7 @@ jobs:
           docker run --rm --gpus all \
             -e NGC_API_KEY \
             -e HOST_DATA_DIR="$(pwd)/notebook_data/germline" \
+            -e NOTEBOOK_DATA_DIR="/workspace/notebook_data/germline" \
             -v $(pwd):/workspace \
             -v /var/run/docker.sock:/var/run/docker.sock \
             -w /workspace \
