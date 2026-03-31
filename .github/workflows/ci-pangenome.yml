@@ -46,6 +46,7 @@ jobs:
 
           docker run --rm --gpus all \
             -e NGC_API_KEY \
+            -e CI_PATCH_NOTEBOOKS=1 \
             -e HOST_DATA_DIR="$(pwd)/notebook_data/pangenome" \
             -e NOTEBOOK_DATA_DIR="/workspace/notebook_data/pangenome" \
             -v $(pwd):/workspace \
@@ -59,6 +60,8 @@ jobs:
               ipython kernel install --name 'python3' --user
 
               echo \"\$NGC_API_KEY\" | docker login nvcr.io -u '\$oauthtoken' --password-stdin
+
+              python3 /workspace/scripts/ci_patch_notebooks.py ${NOTEBOOK_DIR}/${NOTEBOOK_PATH}
 
               cd '$NOTEBOOK_DIR'
               papermill '$NOTEBOOK_PATH' '$OUTPUT_NOTEBOOK' --log-output --log-level DEBUG
