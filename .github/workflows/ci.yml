@@ -317,7 +317,7 @@ jobs:
             -w /workspace \
             nvcr.io/nvidia/clara/clara-parabricks:${{ env.PARABRICKS_VERSION }} \
             bash -c "
-              apt-get update && apt-get install -y wget pigz git docker.io
+              apt-get update && apt-get install -y wget pigz git docker.io tabix
               pip install papermill jupyter ipykernel
               ipython kernel install --name 'python3' --user
               echo \"\$NGC_API_KEY\" | docker login nvcr.io -u '\$oauthtoken' --password-stdin
