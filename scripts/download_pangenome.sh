@@ -8,6 +8,10 @@ set -euo pipefail
 DATA_DIR=$1
 mkdir -p $DATA_DIR/ref
 
+# Make sure $DATA_DIR is writable 
+sudo chown -R $USER:$USER $DATA_DIR
+sudo chmod -R 777 $DATA_DIR
+
 # Download the data 
 # Note: The tarball downloads unnecessary files and can be streamlined in the future 
 cd $DATA_DIR && \
