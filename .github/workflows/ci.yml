@@ -55,6 +55,13 @@ jobs:
             nvcr.io/nvidia/clara/clara-parabricks:${{ env.PARABRICKS_VERSION }} \
             bash -c "
               apt-get update && apt-get install -y wget pigz docker.io
+              if ! command -v sudo >/dev/null 2>&1; then
+                cat >/usr/local/bin/sudo <<'EOF'
+#!/bin/sh
+exec \"\$@\"
+EOF
+                chmod +x /usr/local/bin/sudo
+              fi
               pip install papermill jupyter ipykernel
               ipython kernel install --name 'python3' --user
               echo \"\$NGC_API_KEY\" | docker login nvcr.io -u '\$oauthtoken' --password-stdin
@@ -93,7 +100,7 @@ jobs:
             -v ./germline_wes_result.html:/app/input/germline_wes.html \
             -v "$(pwd):/workspace" \
             nvcr.io/rw983xdqtcdp/auto_test_team/blueprint-github-test-image:latest \
-            pytest -m germline --disable-warnings --html=/workspace/genomics.html
+            pytest testcases/test_genomics_analysis_notebook.py -m germline --disable-warnings --html=/workspace/genomics.html
 
       - name: Upload artifacts
         if: always()
@@ -181,6 +188,13 @@ jobs:
             nvcr.io/nvidia/clara/clara-parabricks:${{ env.PARABRICKS_VERSION }} \
             bash -c "
               apt-get update && apt-get install -y wget pigz docker.io
+              if ! command -v sudo >/dev/null 2>&1; then
+                cat >/usr/local/bin/sudo <<'EOF'
+#!/bin/sh
+exec \"\$@\"
+EOF
+                chmod +x /usr/local/bin/sudo
+              fi
               pip install papermill jupyter ipykernel
               ipython kernel install --name 'python3' --user
               echo \"\$NGC_API_KEY\" | docker login nvcr.io -u '\$oauthtoken' --password-stdin
@@ -219,16 +233,7 @@ jobs:
             -v ./pangenome_result.html:/app/input/pangenome.html \
             -v "$(pwd):/workspace" \
             nvcr.io/rw983xdqtcdp/auto_test_team/blueprint-github-test-image:latest \
-            bash -c "
-              set +e
-              pytest -m pangenome --disable-warnings --html=/workspace/genomics.html
-              ec=\$?
-              if [ \$ec -eq 5 ]; then
-                echo 'WARNING: pytest exit 5 — no tests match -m pangenome; pass until test image adds markers.'
-                exit 0
-              fi
-              exit \$ec
-            "
+            pytest testcases/test_genomics_analysis_notebook.py -m pangenome --disable-warnings --html=/workspace/genomics.html
 
       - name: Upload artifacts
         if: always()
@@ -318,6 +323,13 @@ jobs:
             nvcr.io/nvidia/clara/clara-parabricks:${{ env.PARABRICKS_VERSION }} \
             bash -c "
               apt-get update && apt-get install -y wget pigz git docker.io tabix
+              if ! command -v sudo >/dev/null 2>&1; then
+                cat >/usr/local/bin/sudo <<'EOF'
+#!/bin/sh
+exec \"\$@\"
+EOF
+                chmod +x /usr/local/bin/sudo
+              fi
               pip install papermill jupyter ipykernel
               ipython kernel install --name 'python3' --user
               echo \"\$NGC_API_KEY\" | docker login nvcr.io -u '\$oauthtoken' --password-stdin
@@ -359,16 +371,7 @@ jobs:
             -v ./variant_effect_prediction_result.html:/app/input/variant_effect_prediction.html \
             -v "$(pwd):/workspace" \
             nvcr.io/rw983xdqtcdp/auto_test_team/blueprint-github-test-image:latest \
-            bash -c "
-              set +e
-              pytest -m vep --disable-warnings --html=/workspace/genomics.html
-              ec=\$?
-              if [ \$ec -eq 5 ]; then
-                echo 'WARNING: pytest exit 5 — no tests match -m vep; pass until test image adds markers.'
-                exit 0
-              fi
-              exit \$ec
-            "
+            pytest testcases/test_genomics_analysis_notebook.py -m vep --disable-warnings --html=/workspace/genomics.html
 
       - name: Upload artifacts
         if: always()
