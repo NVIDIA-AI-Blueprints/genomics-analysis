@@ -56,10 +56,7 @@ jobs:
             bash -c "
               apt-get update && apt-get install -y wget pigz docker.io
               if ! command -v sudo >/dev/null 2>&1; then
-                cat >/usr/local/bin/sudo <<'EOF'
-#!/bin/sh
-exec \"\$@\"
-EOF
+                printf '%s\n' '#!/bin/sh' 'exec \"\$@\"' >/usr/local/bin/sudo
                 chmod +x /usr/local/bin/sudo
               fi
               pip install papermill jupyter ipykernel
@@ -189,10 +186,7 @@ EOF
             bash -c "
               apt-get update && apt-get install -y wget pigz docker.io
               if ! command -v sudo >/dev/null 2>&1; then
-                cat >/usr/local/bin/sudo <<'EOF'
-#!/bin/sh
-exec \"\$@\"
-EOF
+                printf '%s\n' '#!/bin/sh' 'exec \"\$@\"' >/usr/local/bin/sudo
                 chmod +x /usr/local/bin/sudo
               fi
               pip install papermill jupyter ipykernel
@@ -324,10 +318,7 @@ EOF
             bash -c "
               apt-get update && apt-get install -y wget pigz git docker.io tabix
               if ! command -v sudo >/dev/null 2>&1; then
-                cat >/usr/local/bin/sudo <<'EOF'
-#!/bin/sh
-exec \"\$@\"
-EOF
+                printf '%s\n' '#!/bin/sh' 'exec \"\$@\"' >/usr/local/bin/sudo
                 chmod +x /usr/local/bin/sudo
               fi
               pip install papermill jupyter ipykernel
