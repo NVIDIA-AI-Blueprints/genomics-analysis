@@ -56,9 +56,10 @@ jobs:
             bash -c "
               apt-get update && apt-get install -y wget pigz docker.io
               if ! command -v sudo >/dev/null 2>&1; then
-                printf '%s\n' '#!/bin/sh' 'exec \"\$@\"' >/usr/local/bin/sudo
+                printf '%s\n' '#!/bin/sh' 'exec "$@"' >/usr/local/bin/sudo
                 chmod +x /usr/local/bin/sudo
               fi
+              export USER="${USER:-root}"
               pip install papermill jupyter ipykernel
               ipython kernel install --name 'python3' --user
               echo \"\$NGC_API_KEY\" | docker login nvcr.io -u '\$oauthtoken' --password-stdin
@@ -186,9 +187,10 @@ jobs:
             bash -c "
               apt-get update && apt-get install -y wget pigz docker.io
               if ! command -v sudo >/dev/null 2>&1; then
-                printf '%s\n' '#!/bin/sh' 'exec \"\$@\"' >/usr/local/bin/sudo
+                printf '%s\n' '#!/bin/sh' 'exec "$@"' >/usr/local/bin/sudo
                 chmod +x /usr/local/bin/sudo
               fi
+              export USER="${USER:-root}"
               pip install papermill jupyter ipykernel
               ipython kernel install --name 'python3' --user
               echo \"\$NGC_API_KEY\" | docker login nvcr.io -u '\$oauthtoken' --password-stdin
@@ -318,9 +320,10 @@ jobs:
             bash -c "
               apt-get update && apt-get install -y wget pigz git docker.io tabix
               if ! command -v sudo >/dev/null 2>&1; then
-                printf '%s\n' '#!/bin/sh' 'exec \"\$@\"' >/usr/local/bin/sudo
+                printf '%s\n' '#!/bin/sh' 'exec "$@"' >/usr/local/bin/sudo
                 chmod +x /usr/local/bin/sudo
               fi
+              export USER="${USER:-root}"
               pip install papermill jupyter ipykernel
               ipython kernel install --name 'python3' --user
               echo \"\$NGC_API_KEY\" | docker login nvcr.io -u '\$oauthtoken' --password-stdin

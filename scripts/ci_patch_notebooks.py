@@ -79,7 +79,6 @@ def patch_download_cell(text: str) -> str:
         if old not in text:
             continue
         new = (
-            "%%sh \n\n"
             'if [ "$(id -u)" -eq 0 ]; then\n'
             f'  bash ../scripts/{script} "$DATA_DIR"\n'
             "else\n"
