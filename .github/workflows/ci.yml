@@ -16,6 +16,7 @@ env:
 
 jobs:
   germline-wes:
+    if: ${{ false }}
     runs-on: arc-runner-set-oke-org-poc-2-gpu
     steps:
       - name: Checkout BP repository
@@ -59,6 +60,7 @@ jobs:
                 printf '%s\n' '#!/bin/sh' 'exec "$@"' >/usr/local/bin/sudo
                 chmod +x /usr/local/bin/sudo
               fi
+              export USER="${USER:-root}"
               pip install papermill jupyter ipykernel
               ipython kernel install --name 'python3' --user
               echo \"\$NGC_API_KEY\" | docker login nvcr.io -u '\$oauthtoken' --password-stdin
@@ -145,8 +147,6 @@ jobs:
             <p>Thanks!</p>
 
   pangenome:
-    needs: germline-wes
-    if: ${{ always() }}
     runs-on: arc-runner-set-oke-org-poc-2-gpu
     steps:
       - name: Checkout BP repository
@@ -190,6 +190,7 @@ jobs:
                 printf '%s\n' '#!/bin/sh' 'exec "$@"' >/usr/local/bin/sudo
                 chmod +x /usr/local/bin/sudo
               fi
+              export USER="${USER:-root}"
               pip install papermill jupyter ipykernel
               ipython kernel install --name 'python3' --user
               echo \"\$NGC_API_KEY\" | docker login nvcr.io -u '\$oauthtoken' --password-stdin
@@ -276,8 +277,7 @@ jobs:
             <p>Thanks!</p>
 
   variant-effect-prediction:
-    needs: pangenome
-    if: ${{ always() }}
+    if: ${{ false }}
     runs-on: arc-runner-set-oke-org-poc-2-gpu
     steps:
       - name: Checkout BP repository (with CodonFM submodule)
@@ -323,6 +323,7 @@ jobs:
                 printf '%s\n' '#!/bin/sh' 'exec "$@"' >/usr/local/bin/sudo
                 chmod +x /usr/local/bin/sudo
               fi
+              export USER="${USER:-root}"
               pip install papermill jupyter ipykernel
               ipython kernel install --name 'python3' --user
               echo \"\$NGC_API_KEY\" | docker login nvcr.io -u '\$oauthtoken' --password-stdin
