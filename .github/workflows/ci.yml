@@ -16,7 +16,6 @@ env:
 
 jobs:
   germline-wes:
-    if: ${{ false }}
     runs-on: arc-runner-set-oke-org-poc-2-gpu
     steps:
       - name: Checkout BP repository
@@ -147,6 +146,8 @@ jobs:
             <p>Thanks!</p>
 
   pangenome:
+    needs: germline-wes
+    if: ${{ always() }}
     runs-on: arc-runner-set-oke-org-poc-2-gpu
     steps:
       - name: Checkout BP repository
@@ -277,7 +278,8 @@ jobs:
             <p>Thanks!</p>
 
   variant-effect-prediction:
-    if: ${{ false }}
+    needs: pangenome
+    if: ${{ always() }}
     runs-on: arc-runner-set-oke-org-poc-2-gpu
     steps:
       - name: Checkout BP repository (with CodonFM submodule)
