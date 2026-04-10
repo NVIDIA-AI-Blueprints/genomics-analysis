@@ -59,6 +59,7 @@ jobs:
                 printf '%s\n' '#!/bin/sh' 'exec "$@"' >/usr/local/bin/sudo
                 chmod +x /usr/local/bin/sudo
               fi
+              export USER="${USER:-root}"
               pip install papermill jupyter ipykernel
               ipython kernel install --name 'python3' --user
               echo \"\$NGC_API_KEY\" | docker login nvcr.io -u '\$oauthtoken' --password-stdin
@@ -189,6 +190,7 @@ jobs:
                 printf '%s\n' '#!/bin/sh' 'exec "$@"' >/usr/local/bin/sudo
                 chmod +x /usr/local/bin/sudo
               fi
+              export USER="${USER:-root}"
               pip install papermill jupyter ipykernel
               ipython kernel install --name 'python3' --user
               echo \"\$NGC_API_KEY\" | docker login nvcr.io -u '\$oauthtoken' --password-stdin
@@ -321,6 +323,7 @@ jobs:
                 printf '%s\n' '#!/bin/sh' 'exec "$@"' >/usr/local/bin/sudo
                 chmod +x /usr/local/bin/sudo
               fi
+              export USER="${USER:-root}"
               pip install papermill jupyter ipykernel
               ipython kernel install --name 'python3' --user
               echo \"\$NGC_API_KEY\" | docker login nvcr.io -u '\$oauthtoken' --password-stdin
