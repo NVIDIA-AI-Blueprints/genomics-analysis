@@ -1,4 +1,4 @@
-name: Notebook CI — Germline, Pangenome, VEP (serial)
+name: Notebook Execution and Test — Germline, Pangenome, VEP
 
 on:
   push:
