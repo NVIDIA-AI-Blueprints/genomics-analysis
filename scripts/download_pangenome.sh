@@ -25,3 +25,6 @@ cd $DATA_DIR/ref && \
 cd $DATA_DIR && \
     pigz -dc parabricks_sample.tar.gz | tar xvf - && \
     mv parabricks_sample/Data/sample_* . 
+
+# Make the output dir (if it doesn't exist already)
+mkdir -p $DATA_DIR/out
