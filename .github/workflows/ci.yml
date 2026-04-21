@@ -16,7 +16,7 @@ env:
 
 jobs:
   germline-wes:
-    runs-on: arc-runner-set-oke-org-poc-2-gpu
+    runs-on: arc-runners-org-nvidia-ai-bp-2-gpu
     steps:
       - name: Checkout BP repository
         uses: actions/checkout@v3
@@ -148,7 +148,7 @@ jobs:
   pangenome:
     needs: germline-wes
     if: ${{ always() }}
-    runs-on: arc-runner-set-oke-org-poc-2-gpu
+    runs-on: arc-runners-org-nvidia-ai-bp-2-gpu
     steps:
       - name: Checkout BP repository
         uses: actions/checkout@v3
@@ -280,7 +280,7 @@ jobs:
   variant-effect-prediction:
     needs: pangenome
     if: ${{ always() }}
-    runs-on: arc-runner-set-oke-org-poc-2-gpu
+    runs-on: arc-runners-org-nvidia-ai-bp-2-gpu
     steps:
       - name: Checkout BP repository (with CodonFM submodule)
         uses: actions/checkout@v3
