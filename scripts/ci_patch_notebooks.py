@@ -28,19 +28,15 @@ def _text_to_source(text: str) -> list[str]:
     return text.splitlines(keepends=True)
 
 
-DATA_DIR_BLOCK_OLD_VARIANTS = (
+DATA_DIR_BLOCK_OLD_VARIANTS = tuple(
     (
         'import os\n\n'
         '# Set the path to the data directory \n'
-        'os.environ[\'DATA_DIR\'] = "/ephemeral"\n'
-        'print("✅ HOST_PATH exported to shell")'
-    ),
-    (
-        'import os\n\n'
-        '# Set the path to the data directory \n'
-        'os.environ[\'DATA_DIR\'] = "/ephemeral"\n'
-        'print("✅ DATA_DIR exported to shell")'
-    ),
+        f'os.environ[\'DATA_DIR\'] = "{default_dir}"\n'
+        f'print("{message}")'
+    )
+    for default_dir in ("/ephemeral", "/data")
+    for message in ("✅ HOST_PATH exported to shell", "✅ DATA_DIR exported to shell")
 )
 
 DATA_DIR_BLOCK_NEW = (
@@ -48,7 +44,7 @@ DATA_DIR_BLOCK_NEW = (
     'if os.environ.get("NOTEBOOK_DATA_DIR"):\n'
     '    os.environ["DATA_DIR"] = os.environ["NOTEBOOK_DATA_DIR"]\n'
     'else:\n'
-    '    os.environ["DATA_DIR"] = "/ephemeral"\n'
+    '    os.environ["DATA_DIR"] = "/data"\n'
     'print("✅ DATA_DIR=", os.environ["DATA_DIR"])'
 )
 
